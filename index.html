@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quel école d'animation est faite pour toi ?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .question {
+      margin: 20px 0;
+    }
+    .question h2 {
+      font-size: 1.1em;
+      color: #444;
+    }
+    .answers label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      font-size: 1em;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+    #email-form {
+      display: none;
+      margin-top: 30px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 Quelle école d'animation est faite pour toi ?</h1>
+
+  <form id="quiz-form">
+    <div class="question">
+      <h2>1. Quel aspect t'attire le plus dans l'animation ?</h2>
+      <label><input type="radio" name="q1" value="gobelins"> La narration visuelle et la mise en scène</label>
+      <label><input type="radio" name="q1" value="rubika"> Le jeu vidéo et l'interactivité</label>
+      <label><input type="radio" name="q1" value="emca"> L'expérimentation artistique et la liberté graphique</label>
+    </div>
+
+    <div class="question">
+      <h2>2. Quel environnement d'apprentissage préfères-tu ?</h2>
+      <label><input type="radio" name="q2" value="gobelins"> Professionnalisant, proche des studios</label>
+      <label><input type="radio" name="q2" value="rubika"> International et tourné vers la tech</label>
+      <label><input type="radio" name="q2" value="emca"> Créatif, artistique et indépendant</label>
+    </div>
+
+    <div class="question">
+      <h2>3. Ton style préféré :</h2>
+      <label><input type="radio" name="q3" value="emca"> Expérimental, poétique, original</label>
+      <label><input type="radio" name="q3" value="gobelins"> Cinématographique et narratif</label>
+      <label><input type="radio" name="q3" value="rubika"> Stylisé et orienté game/art 3D</label>
+    </div>
+
+    <div class="question">
+      <h2>4. Tu te vois travailler :</h2>
+      <label><input type="radio" name="q4" value="rubika"> Dans le jeu vidéo ou le film 3D</label>
+      <label><input type="radio" name="q4" value="gobelins"> Dans un grand studio d'animation</label>
+      <label><input type="radio" name="q4" value="emca"> En tant qu’auteur ou dans un studio indépendant</label>
+    </div>
+
+    <div class="question">
+      <h2>5. Tu préfères :</h2>
+      <label><input type="radio" name="q5" value="gobelins"> Des projets encadrés avec des objectifs précis</label>
+      <label><input type="radio" name="q5" value="emca"> Une grande liberté dans tes créations</label>
+      <label><input type="radio" name="q5" value="rubika"> Travailler en équipe sur des projets interactifs</label>
+    </div>
+
+    <div class="question">
+      <h2>6. Quel outil préfères-tu ?</h2>
+      <label><input type="radio" name="q6" value="rubika"> Unreal Engine, Blender, Unity</label>
+      <label><input type="radio" name="q6" value="gobelins"> Storyboard Pro, After Effects</label>
+      <label><input type="radio" name="q6" value="emca"> Crayons, peinture, techniques mixtes</label>
+    </div>
+
+    <div class="question">
+      <h2>7. Quelle ambition t'inspire le plus ?</h2>
+      <label><input type="radio" name="q7" value="gobelins"> Travailler dans l’industrie internationale de l’animation</label>
+      <label><input type="radio" name="q7" value="rubika"> Réaliser un jeu ou un court-métrage 3D interactif</label>
+      <label><input type="radio" name="q7" value="emca"> Explorer ton propre langage visuel et raconter des histoires uniques</label>
+    </div>
+
+    <button type="submit">Voir mon résultat</button>
+  </form>
+
+  <div id="email-form">
+    <p>📩 Laisse ton email pour recevoir ton résultat + notre guide orientation animation !</p>
+    <input type="email" id="email" placeholder="Ton email" />
+    <button onclick="submitEmail()">Recevoir mon résultat</button>
+  </div>
+
+  <div id="result"></div>
+
+  <script>
+    const results = {
+      gobelins: 0,
+      rubika: 0,
+      emca: 0
+    };
+
+    document.getElementById("quiz-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      Object.keys(results).forEach(key => results[key] = 0);
+      for (let i = 1; i <= 7; i++) {
+        const val = document.querySelector(`input[name="q${i}"]:checked`);
+        if (val) results[val.value] += 1;
+      }
+      const best = Object.entries(results).sort((a, b) => b[1] - a[1])[0][0];
+      let message = "";
+      if (best === "gobelins") {
+        message = "🎬 Tu es fait(e) pour une école comme Gobelins : narration, professionnalisation, excellence.";
+      } else if (best === "rubika") {
+        message = "🎮 Tu devrais explorer une école comme Rubika : jeux vidéo, tech, animation 3D.";
+      } else {
+        message = "🎨 Tu as le profil pour une école comme l’EMCA : création libre, artistique, originale.";
+      }
+      document.getElementById("quiz-form").style.display = "none";
+      document.getElementById("result").innerText = message;
+      document.getElementById("email-form").style.display = "block";
+    });
+
+    function submitEmail() {
+      const email = document.getElementById("email").value;
+      if (!email.includes("@")) {
+        alert("Merci de saisir un email valide ✉️");
+        return;
+      }
+      alert("Merci ! Tu recevras ton analyse dans ta boîte 📬");
+      // Ajouter ici l'appel API emailing
+    }
+  </script>
+</body>
+</html>
